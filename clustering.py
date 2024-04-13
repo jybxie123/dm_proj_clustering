@@ -5,22 +5,23 @@ import utils.plot as p
 CLUSTERING_METHODS = {
     'kmeans': m.kmeans,
     'kmeans_plus_plus': m.kmeans_plus_plus,
-    'dbscan': m.dbscan,
 }
 
 DATASETS = {
     'iris': d.get_iris,
     'wine': d.get_wine,
     'digits': d.get_digits,
+    'mall_cust': d.get_mall_cust,
+    'blobs': d.get_blobs,
 }
 
 
 class Clustering():
-    def __init__(self, method: str, dataset: str, c_num: int, eps: float, min_samples: int) -> None:
+    def __init__(self, method: str, dataset: str, c_num: int) -> None:
         self.dataset_name = dataset
         self.dataset = DATASETS[dataset]()
         self.method_name = method
-        self.method = CLUSTERING_METHODS[method](self.dataset,c_num=c_num,eps=eps, min_samples=min_samples)
+        self.method = CLUSTERING_METHODS[method](self.dataset,c_num=c_num)
         self.plot = p.plot_dataset
 
     def train(self):
@@ -34,5 +35,5 @@ class Clustering():
             centers = model.cluster_centers_
         else:
             centers = None
-        self.plot(X, y, centers, ds_name=self.dataset_name, method_name=self.method_name, is_dim_reduced=True)
+        self.plot(X, y, centers, ds_name=self.dataset_name, method_name=self.method_name, is_dim_reduced=False)
 
