@@ -13,6 +13,9 @@ DATASETS = {
     'digits': d.get_digits,
     'mall_cust': d.get_mall_cust,
     'blobs': d.get_blobs,
+    'blobs_with_outlier': d.get_blobs_with_outlier,
+    'engy_time' : d.get_engy_time,
+    'two_diamonds': d.get_two_diamonds,
 }
 
 
