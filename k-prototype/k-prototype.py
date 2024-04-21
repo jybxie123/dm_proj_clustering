@@ -13,12 +13,12 @@ data = data.dropna()
 # num_unique_values = len(unique_values)
 # print(num_unique_values)
 
-features = data.iloc[:, 5:].values  # Use the 6th column and afterward as data
+features = data.iloc[:, 4:].values  # Use the 5th column and afterward as data
 labels = data.iloc[:, 0].values  # The 1th colum is the target label, which is "make".
-categorical_indices = [5, 6, 12, 13, 15]  # The 6、7、13、14、16th column is catagorical data.
-
+categorical_indices = [4, 5, 6, 12, 13, 15]  # The 5, 6、7、13、14、16th column is catagorical data.
+print(len(features[0]))
 scaler = MinMaxScaler()
-non_categorical_features = data.iloc[:, 5:].drop(data.columns[categorical_indices], axis=1).values
+non_categorical_features = data.iloc[:, 4:].drop(data.columns[categorical_indices], axis=1).values
 non_categorical_features_normalized = scaler.fit_transform(non_categorical_features)
 categorical_features = data.iloc[:, categorical_indices].values
 # print(categorical_features)
@@ -50,11 +50,15 @@ while exception:
         pass
 
 
-kmeans = KMeans(n_clusters=20, init='k-means++', random_state=0)
+kmeans = KMeans(n_clusters=20)
 clusters_non_categorical = kmeans.fit_predict(non_categorical_features)
 
-ari_non_categorical = adjusted_rand_score(labels, clusters_non_categorical)
+kmeans_pp = KMeans(n_clusters=20, init="k-means++")
+clusters_non_categorical_pp = kmeans_pp.fit_predict(non_categorical_features)
 
+ari_kmeans = adjusted_rand_score(labels, clusters_non_categorical)
+ari_kmeans_pp = adjusted_rand_score(labels, clusters_non_categorical_pp)
 ari = adjusted_rand_score(labels, clusters)
-print("Adjusted Rand Index (ARI) =", ari)
-print("Adjusted Rand Index (ARI) for non-categorical data with K-Means =", ari_non_categorical)
+print("Adjusted Rand Index (ARI) for K-Prototype = ", ari)
+print("Adjusted Rand Index (ARI) for K-Means = ", ari_kmeans)
+print("Adjusted Rand Index (ARI) for K-Means++ = ", ari_kmeans_pp)
