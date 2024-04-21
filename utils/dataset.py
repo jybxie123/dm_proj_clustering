@@ -27,13 +27,12 @@ def get_mall_cust():
     return simple_x
 
 def get_blobs():
-    centers = [[0, 1], [0, 2], [2, 0]]
-    X, y = make_blobs(n_samples=1000, centers=centers, cluster_std=0.5, random_state=0) 
+    X, y = make_blobs(n_samples=1000, centers=3, cluster_std=0.5, random_state=0) 
     simple_x = SimpleDataset(X, y)
     return simple_x
 
 def get_blobs_with_outlier():
-    X, y = make_blobs(n_samples=1000, centers=4, cluster_std=0.60, random_state=0)
+    X, y = make_blobs(n_samples=1000, centers=3, cluster_std=0.60, random_state=0)
     np.random.seed(42) 
     n_outliers = 100
     outliers = np.random.uniform(low=-10, high=10, size=(n_outliers, 2))
@@ -48,7 +47,7 @@ def get_two_diamonds():
     data = pd.read_csv(url)
     X = data[['X1','X2']].values
     y = data['Class'].values
-    simple_x = SimpleDataset(X)
+    simple_x = SimpleDataset(X,y)
     return simple_x
 
 def get_engy_time():
@@ -56,7 +55,7 @@ def get_engy_time():
     data = pd.read_csv(url)
     X = data[['X1','X2']].values
     y = data['Class'].values
-    simple_x = SimpleDataset(X)
+    simple_x = SimpleDataset(X,y)
     return simple_x
 
 if __name__ == '__main__':

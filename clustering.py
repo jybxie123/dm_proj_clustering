@@ -18,6 +18,12 @@ DATASETS = {
     'two_diamonds': d.get_two_diamonds,
 }
 
+def calculate_accu(y_true, y_pred):
+    if y_true is None:
+        return None
+    from sklearn import metrics
+    adjusted_rand_index = metrics.adjusted_rand_score(y_true, y_pred)
+    return adjusted_rand_index
 
 class Clustering():
     def __init__(self, method: str, dataset: str, c_num: int) -> None:
@@ -34,6 +40,11 @@ class Clustering():
             y = model.predict(X)
         else:
             y = model.labels_
+        # calculate accu
+        y_true = self.dataset.target if hasattr(self.dataset, 'target') else None
+        accu = calculate_accu(y_true, y)
+        if accu is not None:
+            print(f"Accuracy: {accu}")
         if hasattr(model, 'cluster_centers_'):
             centers = model.cluster_centers_
         else:

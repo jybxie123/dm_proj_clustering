@@ -33,5 +33,6 @@ def plot_dataset(X_ori, y, centers_ori, ds_name="Iris", method_name = 'K-means',
     plt.xlabel("Sepal Length")
     plt.ylabel("Sepal Width")
     plt.title(f"{method_name} Clustering on {ds_name} Dataset")
+    plt.savefig(f'{ds_name}_{method_name}.png')
     plt.show()
 
